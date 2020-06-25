@@ -1,8 +1,48 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
+import { SigninComponent } from './pages/signin/signin.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { AddpostComponent } from './pages/addpost/addpost.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard'
+import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.component';
 
 
-const routes: Routes = [];
+const redirectUnathorizeToLogin = () => {
+  redirectUnauthorizedTo(["signin"])
+}
+
+const redirectLoggedInToHome = () => redirectLoggedInTo([""]);
+
+
+const routes: Routes = [{
+  path:'',
+  component: HomeComponent,
+  canActivate: [AngularFireAuthGuard],
+  data: {authGuardPipe: redirectUnathorizeToLogin}
+},
+{
+  path:'signin',
+  component: SigninComponent,
+  canActivate: [AngularFireAuthGuard],
+  data: {authGuardPipe: redirectLoggedInToHome}
+},
+{
+  path:'signup',
+  component: SignupComponent,
+  canActivate: [AngularFireAuthGuard],
+  data: { authGuardPipe: redirectLoggedInToHome }
+},
+{
+  path:'addpost',
+  component: AddpostComponent,
+  canActivate: [AngularFireAuthGuard],
+  data: {authGuardPipe : redirectUnathorizeToLogin}
+},
+{
+  path:'**',
+  component: PagenotfoundComponent
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
