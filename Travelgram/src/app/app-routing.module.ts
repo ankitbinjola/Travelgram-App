@@ -16,16 +16,18 @@ const redirectLoggedInToHome = () => redirectLoggedInTo([""]);
 
 
 const routes: Routes = [{
-  path:'',
-  component: HomeComponent,
-  canActivate: [AngularFireAuthGuard],
-  data: {authGuardPipe: redirectUnathorizeToLogin}
+  path: '',
+  component: HomeComponent
+  ,
+  // canActivate: [AngularFireAuthGuard],
+  // data: { authGuardPipe: redirectUnathorizeToLogin }
 },
 {
   path:'signin',
-  component: SigninComponent,
-  canActivate: [AngularFireAuthGuard],
-  data: {authGuardPipe: redirectLoggedInToHome}
+  component: SigninComponent
+  // ,
+  // canActivate: [AngularFireAuthGuard],
+  // data: {authGuardPipe: redirectLoggedInToHome}
 },
 {
   path:'signup',
@@ -35,9 +37,10 @@ const routes: Routes = [{
 },
 {
   path:'addpost',
-  component: AddpostComponent,
-  canActivate: [AngularFireAuthGuard],
-  data: {authGuardPipe : redirectUnathorizeToLogin}
+  component: AddpostComponent
+  // ,
+  // canActivate: [AngularFireAuthGuard],
+  // data: {authGuardPipe : redirectUnathorizeToLogin}
 },
 {
   path:'**',

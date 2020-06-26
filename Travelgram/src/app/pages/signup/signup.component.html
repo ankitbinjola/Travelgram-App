@@ -7,12 +7,12 @@
           </div>
   
           <div class="card-body">
-            <form (ngSubmit)= "onSubmit(f)" #f = "ngForm">
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
               <div>
                 <!-- image picker -->
                 <div class="text-center">
                   <label for="imagepicker" class="">
-                    <img [src]="picture" width="80" height="80" alt="" class="profile" />
+                    <img [src]="picture" width="180" height="150" alt="" class="profile" />
                   </label>
   
                   <input
@@ -24,7 +24,8 @@
                     class="hidden"
                     hidden
                     (change)="uploadFile($event)"
-                  />
+                    ngModel
+                    />
                 </div>
   
                 <div [hidden]="!uploadPercent || uploadPercent==100"

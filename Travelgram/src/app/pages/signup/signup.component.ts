@@ -45,7 +45,7 @@ onSubmit(f: NgForm){
         picture: this.picture
       })
     }).then(() => {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/signin');
       this.toastr.success("hey you have signed up .. horray")
     }).catch((error)=> {
       console.log("error block of signup.ts");
