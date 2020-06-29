@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  users = [];
+  posts = [];
+
+  isLoading = false;
+
+  constructor(private db: AngularFireDatabase, private toastr: ToastrService) { 
+    this.isLoading = true;
+    
+    db.object('/user').valueChanges().subscribe((obj)=> {
+      if(obj){
+        this.users = Object.values(obj);
+        this.isLoading = false;
+        }else
+          {
+            toastr.error("No user found");
+            this.users = [];
+            this.isLoading = false;
+          }
+    })
+
+      db.object('/posts').valueChanges().subscribe((obj)=> {
+        if(obj){
+          this.posts = Object.values(obj).sort((a, b) => b.date-a.date);
+          this.isLoading  = false;
+        }else{
+          toastr.error("No posts found");
+          this.posts = [];
+          this.isLoading = false;
+        }
+      })
+
+
+  }
 
   ngOnInit(): void {
   }

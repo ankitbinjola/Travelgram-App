@@ -27,21 +27,23 @@ uploadPercent = null;
     , private storage: AngularFireStorage, private db: AngularFireDatabase) { }
 
   ngOnInit(): void {
+console.log()
   }
 
 //on form submit
 onSubmit(f: NgForm){
-    const {email, password, country, bio, name } = f.form.value;    //destructing getting values from the form
-
+    const { email, password, country, bio, name, username } = f.form.value;    //destructing getting values from the form
+    
     this.auth.signUp(email, password).then((res)=> {
       console.log(res);
       const { uid } = res.user  //destructing 
       this.db.object(`/user/${uid}`).set({    //creating collection and document under firebase and setting keys for them
-        id:uid,
+        id: uid,
         name: name,
         email: email,
         country: country,
         bio: bio,
+        username : username,
         picture: this.picture
       })
     }).then(() => {
